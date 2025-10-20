@@ -1,4 +1,5 @@
 from typing import Dict, Any
+import os
 
 def policy_filter(ctx: Dict[str, Any]) -> tuple[bool, str]:
     # Example: require currency and non-negative amount
