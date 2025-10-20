@@ -1,6 +1,6 @@
 from digital_workforce.decision_engine.registry import DecisionRegistry
 from digital_workforce.decision_engine.executor import DecisionExecutor
-from digital_workforce.filters import FILTERS
+from digital_workforce.decision_engine.filters import FILTERS
 
 class DecisionEvaluator:
     """Evaluates decision templates using defined filters and logic."""

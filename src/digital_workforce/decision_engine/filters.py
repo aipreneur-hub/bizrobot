@@ -15,8 +15,17 @@ def risk_filter(ctx: Dict[str, Any]) -> tuple[bool, str]:
     # Example: mark high VAT as risk
     return (ctx.get("vat", 0) <= 20), "risk OK" if ctx.get("vat",0) <= 20 else "risk: vat high"
 
+def check_file_exists(inputs):
+    file_path = inputs.get("file_path")
+    if not file_path:
+        return False, "file_path missing"
+    exists = os.path.exists(file_path)
+    return exists, "File exists" if exists else "File not found"
+
+def always_pass(inputs):
+    return True, "OK"
+
 FILTERS = {
-    "policy_filter": policy_filter,
-    "bias_filter": bias_filter,
-    "risk_filter": risk_filter
+    "file_path": check_file_exists,
+    "default": always_pass,
 }
