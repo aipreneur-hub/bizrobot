@@ -19,7 +19,12 @@ def run_cycle(inputs: Dict[str, Any]) -> CognitiveState:
     track_roi(project_id, decision.get("roi_score", 0.0))
 
 
-    outcome = execute_action(decision["action"], inputs)
+    action_value = decision.get("action") or decision.get("decision")
+    if not action_value:
+        print("⚠️  No action found; skipping execution.")
+        return decision
+    outcome = execute_action(action_value, inputs)
+
     state.outcome = outcome
 
     write_audit("action_executed", outcome)
