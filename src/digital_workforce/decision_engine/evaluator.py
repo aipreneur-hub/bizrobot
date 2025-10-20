@@ -13,13 +13,20 @@ class DecisionEvaluator:
 
         # Run filters
         for f in filters:
-            func = FILTERS.get(f)
+            # Handle both string and dict filter forms
+            if isinstance(f, dict):
+                filter_name = f.get("name")
+            else:
+                filter_name = f
+
+            func = FILTERS.get(filter_name)
             if not func:
-                print(f"⚠️  Unknown filter '{f}', skipping.")
+                print(f"⚠️  Unknown filter '{filter_name}', skipping.")
                 continue
+
             passed, note = func(inputs)
             if not passed:
-                print(f"❌ Filter '{f}' failed: {note}")
+                print(f"❌ Filter '{filter_name}' failed: {note}")
                 return {"status": "failed", "reason": note}
 
         # Execute logic
