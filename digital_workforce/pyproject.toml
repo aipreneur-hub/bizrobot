@@ -1,11 +1,33 @@
-
-### `pyproject.toml`
-```toml
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "digital_workforce"
+name = "bizrobot"
 version = "0.1.0"
-requires-python = ">=3.10"
+description = "A framework for building digital workforces with autonomous decision-making."
+authors = [
+  { name = "Cengiz Kaya", email = "datanomous.uk@gmail.com" }
+]
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.9"
+
+dependencies = [
+  "fastapi>=0.115.0",
+  "uvicorn>=0.30.6",
+  "pydantic>=2.9.2",
+  "langchain>=0.3.4",
+  "langgraph>=0.1.8",
+  "openai>=1.45.0",
+  "pyyaml>=6.0.2",
+  "sqlalchemy>=2.0.35",
+  "qdrant-client>=1.11.1",
+  "loguru>=0.7.2"
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools]
+package-dir =
