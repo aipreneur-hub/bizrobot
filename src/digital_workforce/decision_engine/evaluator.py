@@ -7,51 +7,41 @@ class DecisionEvaluator:
     def __init__(self, registry: DecisionRegistry | None = None):
         self.registry = registry or DecisionRegistry()
 
-    def decide(self, project_id: str, inputs: Dict[str, Any]) -> Dict[str, Any]:
+
+    def decide(self, project_id, inputs):
+        """
+        Evaluate a decision project template with flexible filters.
+        Supports both simple string filters and structured dict filters.
+        """
+
         tpl = self.registry.load(project_id)
+        filters = tpl.get("filters", [])
+        logic = tpl.get("decision_logic", [])
+        results = {}
 
-        # 1) Filters
-        filter_results = []
-        for f in tpl.get("filters", []):
-            passed, note = FILTERS[f](inputs)
-            filter_results.append({"filter": f, "passed": passed, "note": note})
-            if not passed:
-                return {
-                    "project_id": project_id,
-                    "action": "escalate",
-                    "confidence": 0.0,
-                    "explanation": f"Filter failed: {f} -> {note}",
-                    "filters": filter_results,
-                }
+        # ✅ Apply filters
+        for f in filters:
+            # Support both dicts and strings
+            if isinstance(f, dict):
+                filter_name = f.get("name")
+            else:
+                filter_name = f
 
-        # 2) Decision logic (deterministic rules)
-        decision = "escalate"
-        for rule in tpl.get("decision_logic", []):
-            cond = rule.get("if")
-            then = rule.get("then")
-            if cond is None:
-                # fallback else branch
-                decision = rule.get("else", decision)
+            if not filter_name:
+                continue  # skip invalid entries
+
+            if filter_name not in FILTERS:
+                print(f"⚠️  Unknown filter '{filter_name}', skipping.")
                 continue
-            try:
-                if eval_condition(cond, inputs):
-                    decision = then
-                    break
-            except Exception as e:
-                return {
-                    "project_id": project_id,
-                    "action": "escalate",
-                    "confidence": 0.0,
-                    "explanation": f"rule error: {e}",
-                    "filters": filter_results,
-                }
 
-        # 3) Confidence simple heuristic
-        confidence = 0.9 if decision != "escalate" else 0.5
-        return {
-            "project_id": project_id,
-            "action": decision,
-            "confidence": confidence,
-            "explanation": "rule-based decision",
-            "filters": filter_results,
-        }
+            try:
+                passed, note = FILTERS[filter_name](inputs)
+                results[filter_name] = {"passed": passed, "note": note}
+            except Exception as e:
+                print(f"❌ Error running filter {filter_name}: {e}")
+                results[filter_name] = {"passed": False, "note": str(e)}
+
+        # ✅ Execute decision logic
+        decision_result = self.executor.execute(logic, inputs, results)
+        return decision_result
+
