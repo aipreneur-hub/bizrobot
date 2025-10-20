@@ -11,6 +11,14 @@ class DecisionEvaluator:
         filters = tpl.get("filters", [])
         logic = tpl.get("decision_logic", [])
 
+        # 🧩 Debug: print YAML content
+        print("\n" + "="*60)
+        print(f"🧠 Processing YAML for project: {project_id}")
+        print("="*60)
+        import yaml
+        print(yaml.dump(tpl, sort_keys=False))
+        print("="*60 + "\n")
+        
         # Run filters
         for f in filters:
             # Handle both string and dict filter forms
