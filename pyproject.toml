@@ -10,7 +10,7 @@ authors = [
   { name = "Cengiz Kaya", email = "datanomous.uk@gmail.com" }
 ]
 readme = "README.md"
-license = { text = "MIT" }
+license = "MIT"
 requires-python = ">=3.9"
 
 dependencies = [
@@ -28,6 +28,7 @@ dependencies = [
 
 [tool.setuptools.packages.find]
 where = ["src"]
+include = ["digital_workforce*"]
 
 [tool.setuptools]
 package-dir = { "" = "src" }
