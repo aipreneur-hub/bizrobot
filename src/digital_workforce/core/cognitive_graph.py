@@ -5,6 +5,20 @@ from ..interfaces.tool_interface import execute_action
 from ..audit.audit_log import write_audit
 from ..audit.roi_tracker import track_roi
 
+
+def _resolve_final_decision(value):
+    """Recursively resolve nested decision structures to a final string."""
+    if isinstance(value, dict):
+        if "decision" in value:
+            return _resolve_final_decision(value["decision"])
+        if "then" in value:
+            return _resolve_final_decision(value["then"])
+        if "else" in value:
+            return _resolve_final_decision(value["else"])
+        return None
+    return value
+
+
 def run_cycle(inputs: Dict[str, Any]) -> CognitiveState:
     """
     Generic U–T–D–A–L loop (Understand–Think–Decide–Act–Learn)
@@ -18,13 +32,15 @@ def run_cycle(inputs: Dict[str, Any]) -> CognitiveState:
     project_id = decision.get("project_id") or decision.get("context", {}).get("project_id", "unknown_project")
     track_roi(project_id, decision.get("roi_score", 0.0))
 
-
+    # ✅ Flatten nested decision logic safely
     action_value = decision.get("action") or decision.get("decision")
-    if not action_value:
-        print("⚠️  No action found; skipping execution.")
-        return decision
-    outcome = execute_action(action_value, inputs)
+    final_action = _resolve_final_decision(action_value)
 
+    if not isinstance(final_action, str):
+        print(f"⚠️  Cannot resolve valid action; skipping execution. Raw value: {final_action}")
+        return state
+
+    outcome = execute_action(final_action, inputs)
     state.outcome = outcome
 
     write_audit("action_executed", outcome)
