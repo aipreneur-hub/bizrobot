@@ -15,7 +15,9 @@ def run_cycle(inputs: Dict[str, Any]) -> CognitiveState:
     state.decision = decision
 
     write_audit("decision_made", decision)
-    track_roi(decision["project_id"], decision.get("roi_score", 0.0))
+    project_id = decision.get("project_id") or decision.get("context", {}).get("project_id", "unknown_project")
+    track_roi(project_id, decision.get("roi_score", 0.0))
+
 
     outcome = execute_action(decision["action"], inputs)
     state.outcome = outcome
