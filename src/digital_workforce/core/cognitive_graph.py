@@ -40,7 +40,12 @@ def run_cycle(inputs: Dict[str, Any]) -> CognitiveState:
         print(f"⚠️  Cannot resolve valid action; skipping execution. Raw value: {final_action}")
         return state
 
-    outcome = execute_action(final_action, inputs)
+    if final_action.startswith("skills."):
+        outcome = execute_action(final_action, inputs)
+    else:
+        print(f"🧾 Final decision: {final_action} (no tool execution required)")
+        outcome = {"status": "ok", "decision": final_action}
+
     state.outcome = outcome
 
     write_audit("action_executed", outcome)
