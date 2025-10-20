@@ -9,5 +9,6 @@ _evaluator = DecisionEvaluator(_registry)
 def make_decision(project_id: str, inputs: Dict[str, Any]) -> Dict[str, Any]:
     result = _evaluator.decide(project_id, inputs)
     tpl = _registry.load(project_id)
-    result["roi_score"] = compute_roi(tpl, result["action"])
+    action_value = result.get("action") or result.get("decision") or "none"
+    result["roi_score"] = compute_roi(tpl, action_value)
     return result
