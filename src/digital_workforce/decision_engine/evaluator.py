@@ -1,12 +1,13 @@
-from typing import Dict, Any
-from .registry import DecisionRegistry
-from .filters_engine import FILTERS
-from ..utils.expression_parser import eval_condition
+from digital_workforce.decision_engine.registry import DecisionRegistry
+from digital_workforce.decision_engine.executor import DecisionExecutor
+from digital_workforce.filters import FILTERS
 
 class DecisionEvaluator:
-    def __init__(self, registry: DecisionRegistry | None = None):
-        self.registry = registry or DecisionRegistry()
+    """Evaluates decision templates using defined filters and logic."""
 
+    def __init__(self):
+        self.registry = DecisionRegistry()
+        self.executor = DecisionExecutor()  # ✅ FIX: ensure executor exists
 
     def decide(self, project_id, inputs):
         """
@@ -19,16 +20,15 @@ class DecisionEvaluator:
         logic = tpl.get("decision_logic", [])
         results = {}
 
-        # ✅ Apply filters
+        # ✅ Apply filters (support dict or string)
         for f in filters:
-            # Support both dicts and strings
             if isinstance(f, dict):
                 filter_name = f.get("name")
             else:
                 filter_name = f
 
             if not filter_name:
-                continue  # skip invalid entries
+                continue
 
             if filter_name not in FILTERS:
                 print(f"⚠️  Unknown filter '{filter_name}', skipping.")
@@ -41,7 +41,6 @@ class DecisionEvaluator:
                 print(f"❌ Error running filter {filter_name}: {e}")
                 results[filter_name] = {"passed": False, "note": str(e)}
 
-        # ✅ Execute decision logic
+        # ✅ Execute the decision logic via the executor
         decision_result = self.executor.execute(logic, inputs, results)
         return decision_result
-
