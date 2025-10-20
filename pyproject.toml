@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "bizrobot"
 version = "0.1.0"
-description = "A framework for building digital workforces with autonomous decision-making."
+description = "A framework for creating digital workforces with autonomous decision-making."
 authors = [
   { name = "Cengiz Kaya", email = "datanomous.uk@gmail.com" }
 ]
@@ -30,4 +30,5 @@ dependencies = [
 where = ["src"]
 
 [tool.setuptools]
-package-dir =
+package-dir = { "" = "src" }
+include-package-data = true
