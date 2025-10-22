@@ -1,0 +1,40 @@
+{
+  "$id": "dsl.schema.json",
+  "type": "object",
+  "required": ["version","run_id","steps"],
+  "properties": {
+    "version": { "type": "string" },
+    "run_id": { "type": "string" },
+    "budget": {
+      "type": "object",
+      "properties": {
+        "max_cost_usd": { "type": "number" },
+        "max_latency_s": { "type": "integer" }
+      }
+    },
+    "artifacts": { "type": "object", "additionalProperties": { "type": "string" } },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id","type"],
+        "properties": {
+          "id": { "type": "string" },
+          "type": { "enum": ["api.call","web.form","mcp.invoke","etl.transform","file.generate","validate.schema"] },
+          "capability": { "type": "string" },
+          "inputs": { "type": "object" },
+          "guards": { "type": "object" },
+          "timeout_s": { "type": "integer" },
+          "retries": { "type": "object", "properties": { "count": {"type":"integer"}, "strategy": {"enum":["exponential","linear"]}, "jitter":{"type":"boolean"} } },
+          "idempotency_key": { "type": "string" },
+          "budget": { "type": "object" },
+          "policies": { "type": "array", "items": { "type": "string" } },
+          "depends_on": { "type": "array", "items": { "type": "string" } },
+          "on_failure": { "type": "object", "properties": { "strategy": {"enum":["critic_patch","abort","compensate"]}, "max_retries":{"type":"integer"} } }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

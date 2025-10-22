@@ -1,0 +1,41 @@
+Metadata-Version: 2.4
+Name: bizrobot
+Version: 0.1.0
+Summary: LLM-powered autonomous business operations agent
+Author: Cengiz (CK)
+Author-email: you@example.com
+Requires-Python: >=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: langchain>=0.2.14
+Requires-Dist: langchain-openai>=0.1.8
+Requires-Dist: langgraph>=0.0.15
+Requires-Dist: fastapi>=0.110.0
+Requires-Dist: uvicorn>=0.29.0
+Requires-Dist: requests>=2.32.0
+Requires-Dist: PyYAML>=6.0
+Requires-Dist: chromadb>=0.5.0
+Requires-Dist: pydantic>=2.8.0
+Requires-Dist: openai>=1.37.0
+Requires-Dist: playwright>=1.47.0
+Requires-Dist: tenacity>=8.3.0
+Dynamic: author
+Dynamic: author-email
+Dynamic: requires-python
+
+# BizRobot 🧠  
+An LLM-powered digital operations agent that automates business workflows using natural language.
+
+### Features
+- Understands user intent and executes business tasks autonomously.
+- Integrates with APIs, web portals, and local tools.
+- Includes memory, policy, critic, and audit layers.
+- Built on LangChain, LangGraph, and modern AI toolkits.
+
+### Setup
+```bash
+git clone https://github.com/yourname/bizrobot.git
+cd bizrobot
+python -m venv .venv
+source .venv/bin/activate  # (Windows: .venv\Scripts\activate)
+pip install -r requirements.txt
+playwright install chromium

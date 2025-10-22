@@ -1,0 +1,27 @@
+{
+  "$id": "capability.schema.json",
+  "type": "object",
+  "required": ["capability_id", "version", "verbs", "input_schema", "output_schema"],
+  "properties": {
+    "capability_id": { "type": "string" },
+    "version": { "type": "string" },
+    "verbs": { "type": "array", "items": { "enum": ["api.call","web.form","mcp.invoke","etl.transform","file.generate"] } },
+    "input_schema": { "type": "object" },
+    "output_schema": { "type": "object" },
+    "side_effects": { "type": "boolean", "default": false },
+    "idempotent": { "type": "boolean", "default": false },
+    "idempotency_key_template": { "type": "string" },
+    "rate_limit": { "type": "string" },
+    "auth_scope": { "type": "string" },
+    "pii_policy": {
+      "type": "object",
+      "properties": {
+        "inputs_mask": { "type": "array", "items": { "type": "string" } },
+        "logs_redact": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": false
+    },
+    "tags": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

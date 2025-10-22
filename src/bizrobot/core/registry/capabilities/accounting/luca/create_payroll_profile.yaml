@@ -1,0 +1,23 @@
+capability_id: accounting.luca.create_payroll_profile
+version: "1.0.0"
+verbs: ["api.call"]
+endpoint: "https://api.luca.com/v1/payroll-profiles"
+input_schema:
+  type: object
+  required: [employee_id, tax_code]
+  properties:
+    employee_id: { type: string }
+    tax_code: { type: string }
+output_schema:
+  type: object
+  required: [payroll_id]
+  properties:
+    payroll_id: { type: string }
+side_effects: true
+idempotent: true
+idempotency_key_template: "payroll-${employee_id}"
+auth_scope: "luca:payroll.write"
+pii_policy:
+  inputs_mask: ["tax_code"]
+  logs_redact: ["tax_code"]
+tags: ["employee","payroll","create"]

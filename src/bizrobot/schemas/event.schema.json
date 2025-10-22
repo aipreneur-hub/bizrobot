@@ -1,0 +1,13 @@
+{
+  "$id": "event.schema.json",
+  "type": "object",
+  "required": ["run_id","ts","type"],
+  "properties": {
+    "run_id": { "type": "string" },
+    "ts": { "type": "string", "format": "date-time" },
+    "type": {
+      "enum": ["RunStarted","Planned","Compiled","StepStarted","StepSucceeded","StepFailed","Patched","Approved","BudgetExceeded","PolicyDenied","RunEnded"]
+    },
+    "payload": { "type": "object" }
+  }
+}
