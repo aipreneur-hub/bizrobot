@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # BizRobot 🧠  
 An LLM-powered digital operations agent that automates business workflows using natural language.
 
@@ -15,3 +16,11 @@ python -m venv .venv
 source .venv/bin/activate  # (Windows: .venv\Scripts\activate)
 pip install -r requirements.txt
 playwright install chromium
+=======
+# Digital Workforce – Core E2E (MVP)
+
+Run the demo:
+```bash
+pip install -r requirements.txt
+python -m src.digital_workforce.examples.run_demo_worker
+>>>>>>> c1da397a59713eaef4869b7f58a16cef092ae269

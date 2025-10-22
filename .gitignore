@@ -1,5 +1,6 @@
 __pycache__/
 *.pyc
+<<<<<<< HEAD
 .venv/
 .env
 .idea/
@@ -7,3 +8,7 @@ __pycache__/
 data/
 logs/
 *.sqlite
+=======
+.env
+.venv/
+>>>>>>> c1da397a59713eaef4869b7f58a16cef092ae269

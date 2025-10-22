@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 langchain>=0.2.14
 langchain-openai>=0.1.8
 langgraph>=0.0.15
@@ -16,3 +17,13 @@ pytest
 black
 ruff
 mypy
+=======
+fastapi==0.115.0
+uvicorn==0.30.6
+pydantic==2.9.2
+python-dotenv==1.0.1
+pyyaml==6.0.2
+jsonschema==4.23.0
+loguru==0.7.2
+jinja2
+>>>>>>> c1da397a59713eaef4869b7f58a16cef092ae269
