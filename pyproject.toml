@@ -1,15 +1,13 @@
 [build-system]
-<<<<<<< HEAD
 requires = ["setuptools>=61.0", "wheel"]
-=======
 requires = ["setuptools>=61.0"]
->>>>>>> c1da397a59713eaef4869b7f58a16cef092ae269
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "bizrobot"
 version = "0.1.0"
-<<<<<<< HEAD
+
+
 description = "LLM-powered autonomous business operations agent"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -26,36 +24,11 @@ dependencies = [
   "openai>=1.37.0",
   "playwright>=1.47.0",
   "tenacity>=8.3.0"
-=======
-description = "A framework for creating digital workforces with autonomous decision-making."
-authors = [
-  { name = "Cengiz Kaya", email = "datanomous.uk@gmail.com" }
-]
-readme = "README.md"
-license = "MIT"
-requires-python = ">=3.9"
-
-dependencies = [
-  "fastapi>=0.115.0",
-  "uvicorn>=0.30.6",
-  "pydantic>=2.9.2",
-  "langchain>=0.3.4",
-  "langgraph>=0.1.8",
-  "openai>=1.45.0",
-  "pyyaml>=6.0.2",
-  "sqlalchemy>=2.0.35",
-  "qdrant-client>=1.11.1",
-  "loguru>=0.7.2"
->>>>>>> c1da397a59713eaef4869b7f58a16cef092ae269
-]
 
 [tool.setuptools.packages.find]
 where = ["src"]
-<<<<<<< HEAD
-=======
-include = ["digital_workforce*"]
+include = ["bizrobot*"]
 
 [tool.setuptools]
 package-dir = { "" = "src" }
 include-package-data = true
->>>>>>> c1da397a59713eaef4869b7f58a16cef092ae269
